@@ -35,11 +35,21 @@ set :symfony_assets_flags, '--symlink --quiet'
 set :symfony_roles, :web
 ```
 
-An hidden task called `symfony:run` can be used to run app/console.
+### Accessing symfony commands directly
+
+This library also provides a `symfony:run` task which allows access to any
+composer command.
+
+From the command line you can run
+
+```bash
+$ cap production symfony:run['list','--env=prod']
+```
+
+Or from within a rake task using capistrano's `invoke`
 
 ```ruby
-# Example
-task :assets do
+task :my_custom_composer_task do
   invoke 'symfony:run', :'assets:install'
 end
 ```
