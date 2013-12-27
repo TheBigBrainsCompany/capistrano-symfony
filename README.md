@@ -35,6 +35,15 @@ set :symfony_assets_flags, '--symlink --quiet'
 set :symfony_roles, :web
 ```
 
+An hidden task called `symfony:run` can be used to run app/console.
+
+```ruby
+# Example
+task :assets do
+  invoke 'symfony:run', :'assets:install'
+end
+```
+
 ## Contributing
 
 1. Fork it
