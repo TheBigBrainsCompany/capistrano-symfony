@@ -3,7 +3,7 @@ namespace :symfony do
     args.with_defaults(:command => :list)
     on roles fetch(:symfony_roles) do
       within release_path do
-        execute :symfony, args[:command], *args.extras
+        execute :php, release_path.join('app/console'), args[:command], *args.extras
       end
     end
   end
