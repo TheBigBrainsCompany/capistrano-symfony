@@ -40,7 +40,7 @@ set :symfony_roles, :web
 This library also provides a `symfony:run` task which allows access to any
 composer command.
 
-From the command line you can run
+With log level set to debug, from the command line you can run
 
 ```bash
 $ cap production symfony:run['list','--env=prod']
