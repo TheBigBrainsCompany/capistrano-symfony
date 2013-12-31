@@ -9,7 +9,7 @@ This gem will let you run Symfony tasks with Capistrano 3.x.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-symfony'
+gem 'capistrano-symfony', '~>0.1.0'
 ```
 
 And then execute:
@@ -31,9 +31,18 @@ require 'capistrano/symfony'
 Configurable options, shown here with defaults:
 
 ```ruby
-set :symfony_assets_flags, '--symlink --quiet'
 set :symfony_roles, :web
+set :symfony_default_flags, '--quiet --no-interaction --env=prod'
+set :symfony_assets_flags, '--symlink'
+set :symfony_cache_clear_flags, ''
+set :symfony_cache_warmup_flags, ''
 ```
+
+### Available tasks
+
+- symfony:assets:install
+- symfony:cache:clear
+- symfony:cache:warmup
 
 ### Accessing symfony commands directly
 
