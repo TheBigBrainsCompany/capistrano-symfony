@@ -4,6 +4,9 @@
 
 This gem will let you run Symfony tasks with Capistrano 3.x.
 
+More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/2013-12-31-realiser-deploiement-automatique-application-symfony-avec-capistrano)
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
