@@ -14,7 +14,7 @@ namespace :symfony do
       # invoke 'symfony:run', :'assets:install', fetch(:symfony_assets_flags)
       on roles fetch(:symfony_roles) do
         within release_path do
-          execute :php, release_path.join('app/console'), :'assets:install', fetch(:symfony_default_flags) << ' ' << fetch(:symfony_assets_flags)
+          execute :php, release_path.join('app/console'), :'assets:install', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_assets_flags)
         end
       end
     end
@@ -26,7 +26,7 @@ namespace :symfony do
       # invoke 'symfony:run', :'cache:clear', fetch(:symfony_cache_clear_flags)
       on roles fetch(:symfony_roles) do
         within release_path do
-          execute :php, release_path.join('app/console'), :'cache:clear', fetch(:symfony_default_flags) << ' ' << fetch(:symfony_cache_clear_flags)
+          execute :php, release_path.join('app/console'), :'cache:clear', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_cache_clear_flags)
         end
       end
     end
@@ -36,13 +36,13 @@ namespace :symfony do
       # invoke 'symfony:run', :'cache:warmup', fetch(:symfony_cache_warmup_flags)
       on roles fetch(:symfony_roles) do
         within release_path do
-          execute :php, release_path.join('app/console'), :'cache:warmup', fetch(:symfony_default_flags) << ' ' << fetch(:symfony_cache_warmup_flags)
+          execute :php, release_path.join('app/console'), :'cache:warmup', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_cache_warmup_flags)
         end
       end
     end
   end
 
-  before 'deploy:published', 'symfony:cache:warmup'
+  before 'deploy:publishing', 'symfony:cache:warmup'
   # this hook work using invoke
   # after 'deploy:updated', 'symfony:cache:warmup'
 end
