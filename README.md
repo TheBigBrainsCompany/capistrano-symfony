@@ -55,7 +55,7 @@ composer command.
 With log level set to debug, from the command line you can run
 
 ```bash
-$ cap production symfony:run['list','--env=prod']
+$ cap production symfony:run['list --env=prod']
 ```
 
 Or from within a rake task using capistrano's `invoke`
