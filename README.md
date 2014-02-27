@@ -35,7 +35,7 @@ Configurable options, shown here with defaults:
 
 ```ruby
 set :symfony_roles, :web
-set :symfony_default_flags, '--quiet --no-interaction --env=prod'
+set :symfony_default_flags, '--quiet --no-interaction'
 set :symfony_assets_flags, '--symlink'
 set :symfony_cache_clear_flags, ''
 set :symfony_cache_warmup_flags, ''
