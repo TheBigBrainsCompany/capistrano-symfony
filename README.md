@@ -39,6 +39,7 @@ set :symfony_default_flags, '--quiet --no-interaction --env=prod'
 set :symfony_assets_flags, '--symlink'
 set :symfony_cache_clear_flags, ''
 set :symfony_cache_warmup_flags, ''
+set :symfony_env, 'prod'
 ```
 
 ### Available tasks
