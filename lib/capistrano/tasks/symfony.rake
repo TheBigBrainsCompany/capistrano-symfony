@@ -3,7 +3,7 @@ namespace :symfony do
     args.with_defaults(:command => :list)
     on roles fetch(:symfony_roles) do
       within release_path do
-        execute :php, release_path.join('app/console'), args[:command], *args.extras
+        execute :php, release_path.join('app/console'), args[:command], *args.extras, "--env=#{fetch(:symfony_env)}"
       end
     end
   end
@@ -14,7 +14,7 @@ namespace :symfony do
       # invoke 'symfony:run', :'assets:install', fetch(:symfony_assets_flags)
       on roles fetch(:symfony_roles) do
         within release_path do
-          execute :php, release_path.join('app/console'), :'assets:install', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_assets_flags)
+          execute :php, release_path.join('app/console'), :'assets:install', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_assets_flags), "--env=#{fetch(:symfony_env)}"
         end
       end
     end
@@ -26,7 +26,7 @@ namespace :symfony do
       # invoke 'symfony:run', :'cache:clear', fetch(:symfony_cache_clear_flags)
       on roles fetch(:symfony_roles) do
         within release_path do
-          execute :php, release_path.join('app/console'), :'cache:clear', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_cache_clear_flags)
+          execute :php, release_path.join('app/console'), :'cache:clear', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_cache_clear_flags), "--env=#{fetch(:symfony_env)}"
         end
       end
     end
@@ -36,7 +36,7 @@ namespace :symfony do
       # invoke 'symfony:run', :'cache:warmup', fetch(:symfony_cache_warmup_flags)
       on roles fetch(:symfony_roles) do
         within release_path do
-          execute :php, release_path.join('app/console'), :'cache:warmup', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_cache_warmup_flags)
+          execute :php, release_path.join('app/console'), :'cache:warmup', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_cache_warmup_flags), "--env=#{fetch(:symfony_env)}"
         end
       end
     end
@@ -50,9 +50,10 @@ end
 namespace :load do
   task :defaults do
     set :symfony_roles, :web
-    set :symfony_default_flags, '--quiet --no-interaction --env=prod'
+    set :symfony_default_flags, '--quiet --no-interaction'
     set :symfony_assets_flags, '--symlink'
     set :symfony_cache_clear_flags, ''
     set :symfony_cache_warmup_flags, ''
+    set :symfony_env,'prod'
   end
 end
