@@ -12,7 +12,7 @@ More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/201
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-symfony', '~>0.1.0'
+gem 'capistrano-symfony', '~> 0.1.3'
 ```
 
 And then execute:
