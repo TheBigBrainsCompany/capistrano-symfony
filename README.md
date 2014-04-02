@@ -12,7 +12,7 @@ More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/201
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-symfony', '~> 0.2.0'
+gem 'capistrano-symfony', '~> 0.1.3'
 ```
 
 And then execute:
@@ -41,6 +41,8 @@ set :symfony_assetic_flags, ''
 set :symfony_cache_clear_flags, ''
 set :symfony_cache_warmup_flags, ''
 set :symfony_env, 'prod'
+set :symfony_parameters_upload, :ask
+set :symfony_parameters_name_scheme, "parameters.#{fetch(:stage)}.yml"
 ```
 
 ### Available tasks
@@ -49,6 +51,7 @@ set :symfony_env, 'prod'
 - symfony:assetic:dump
 - symfony:cache:clear
 - symfony:cache:warmup
+- symfony:parameters:upload
 - symfony:app:clean_environment
 
 ### Using assetic
