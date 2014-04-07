@@ -47,6 +47,7 @@ set :symfony_env, 'prod'
 - symfony:assets:install
 - symfony:cache:clear
 - symfony:cache:warmup
+- symfony:app:clean_environment
 
 ### Accessing symfony commands directly
 
