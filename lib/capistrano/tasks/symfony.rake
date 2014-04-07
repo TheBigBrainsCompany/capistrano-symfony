@@ -53,6 +53,7 @@ namespace :symfony do
   end
 
   before 'deploy:publishing', 'symfony:cache:warmup'
+  before 'deploy:publishing', 'symfony:app:clean_environment'
   # this hook work using invoke
   # after 'deploy:updated', 'symfony:cache:warmup'
 end
