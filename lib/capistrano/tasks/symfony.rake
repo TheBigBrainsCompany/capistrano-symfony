@@ -7,14 +7,12 @@ namespace :symfony do
       end
     end
   end
-  task :clear_front_controllers do
-    namespace :app do
-      desc "Fix app environment"
-      task :fix_environment do
-        on roles(:web) do |host|
-          within release_path do
-            execute "find #{release_path.join('web/')} -maxdepth 1 -name 'app*.php'  | grep -v '#{fetch(:symfony_env)}' | while read app_file; do rm $app_file; done;"
-          end
+  namespace :app do
+    desc "Clean app environment"
+    task :clean_environment do
+      on roles(:web) do |host|
+        within release_path do
+          execute "find #{release_path.join('web/')} -maxdepth 1 -name 'app*.php'  | grep -v '#{fetch(:symfony_env)}' | while read app_file; do rm $app_file; done;"
         end
       end
     end
