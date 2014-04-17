@@ -12,7 +12,7 @@ namespace :symfony do
     task :clean_environment do
       on roles(:web) do |host|
         within release_path do
-          execute "find #{release_path.join('web/')} -maxdepth 1 -name 'app*.php'  | grep -v '#{fetch(:symfony_env)}' | while read app_file; do rm $app_file; done;"
+          execute "find #{release_path.join('web/')} -maxdepth 1 -name 'app_*.php'  | grep -v '#{fetch(:symfony_env)}' | while read app_file; do rm $app_file; done;"
         end
       end
     end
