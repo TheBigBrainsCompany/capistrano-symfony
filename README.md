@@ -12,7 +12,7 @@ More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/201
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-symfony', '~> 0.1.3'
+gem 'capistrano-symfony', '~> 0.2.0'
 ```
 
 And then execute:
@@ -37,6 +37,7 @@ Configurable options, shown here with defaults:
 set :symfony_roles, :web
 set :symfony_default_flags, '--quiet --no-interaction'
 set :symfony_assets_flags, '--symlink'
+set :symfony_assetic_flags, ''
 set :symfony_cache_clear_flags, ''
 set :symfony_cache_warmup_flags, ''
 set :symfony_env, 'prod'
@@ -45,9 +46,18 @@ set :symfony_env, 'prod'
 ### Available tasks
 
 - symfony:assets:install
+- symfony:assetic:dump
 - symfony:cache:clear
 - symfony:cache:warmup
 - symfony:app:clean_environment
+
+### Using assetic
+
+If you are using `assetic`, add in your config file
+
+```ruby
+before 'deploy:publishing', 'symfony:assetic:dump'
+```
 
 ### Accessing symfony commands directly
 

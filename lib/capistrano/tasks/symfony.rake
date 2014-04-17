@@ -29,6 +29,16 @@ namespace :symfony do
       end
     end
   end
+  namespace :assetic do
+    desc 'Assetic dump'
+    task :dump do
+      on roles fetch(:symfony_roles) do
+        within release_path do
+          execute :php, release_path.join('app/console'), :'assetic:dump', fetch(:symfony_default_flags) + ' ' + fetch(:symfony_assetic_flags), "--env=#{fetch(:symfony_env)}"
+        end
+      end
+    end
+  end '
   namespace :cache do
     desc 'Clears the cache'
     task :clear do
@@ -63,6 +73,7 @@ namespace :load do
     set :symfony_roles, :web
     set :symfony_default_flags, '--quiet --no-interaction'
     set :symfony_assets_flags, '--symlink'
+    set :symfony_assetic_flags, ''
     set :symfony_cache_clear_flags, ''
     set :symfony_cache_warmup_flags, ''
     set :symfony_env,'prod'
