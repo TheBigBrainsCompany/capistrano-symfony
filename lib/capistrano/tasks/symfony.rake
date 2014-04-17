@@ -38,7 +38,7 @@ namespace :symfony do
         end
       end
     end
-  end '
+  end
   namespace :cache do
     desc 'Clears the cache'
     task :clear do
