@@ -44,46 +44,37 @@ namespace :symfony do
       task :upload do
           on roles fetch(:symfony_roles) do
               within release_path do
-                  if fetch(:symfony_parameters_name_scheme).nil?
-                      set :symfony_parameters_name_scheme, "parameters.#{fetch(:stage)}.yml"
-                  end
-
-                  if fetch(:symfony_parameters_path).nil?
-                    if fetch(:symfony_parameters_upload) != :never
-                      raise ArgumentError.new(true), "You must define :symfony_parameters_path with the actual path where your parameters can be found"
-                    end
-                  else
-                    parameters_file_path = File.expand_path(
-                        File.join(fetch(:symfony_parameters_path),
-                                  fetch(:symfony_parameters_name_scheme))
-                    )
+                  parameters_file_path = File.expand_path(
+                      File.join(fetch(:symfony_parameters_path),
+                                fetch(:symfony_parameters_name_scheme))
+                  )
 
 
-                    if File.file?(parameters_file_path)
+                  if File.file?(parameters_file_path)
                       upload = false
                       parameters_hash_local  = Digest::MD5.file(parameters_file_path).hexdigest
                       parameters_hash_remote = capture(:md5sum, release_path.join('app/config/parameters.yml')).split(' ')[0]
                       if parameters_hash_local.to_s == parameters_hash_remote.to_s
-                        info 'Parameters are up-to-date'
+                          info 'Parameters are up-to-date'
                       else
-                        case fetch(:symfony_parameters_upload)
-                          when :never
-                            upload = false
-                          when :always
-                            upload = true
-                          else
-                            $stdout.write "Parameters seems to have changed, would you like to upload #{parameters_file_path} to the remote server? [y/N] "
-                            upload = 'y' == $stdin.gets.chomp.downcase ? true : false
-                        end
+                          info 'Parameters are not sync'
+                          case fetch(:symfony_parameters_upload)
+                              when :always
+                                  upload = true
+                              when :ask
+                                  $stdout.write "Parameters seems to have changed, would you like to upload #{parameters_file_path} to the remote server? [y/N] "
+                                  upload = 'y' == $stdin.gets.chomp.downcase ? true : false
+                              else
+                                  upload = false
+                          end
                       end
 
                       if upload
-                        destination_file = release_path.join('app/config/parameters.yml')
-                        upload! parameters_file_path, destination_file
+                          destination_file = release_path.join('app/config/parameters.yml')
+                          upload! parameters_file_path, destination_file
                       end
-                    else
+                  else
                       info 'No parameters found, ignoring...'
-                    end
                   end
               end
           end
@@ -112,6 +103,7 @@ namespace :symfony do
     end
   end
 
+  after 'deploy:updated', 'symfony:parameters:upload'
   before 'deploy:publishing', 'symfony:cache:warmup'
   before 'deploy:publishing', 'symfony:app:clean_environment'
   # this hook work using invoke
@@ -127,5 +119,8 @@ namespace :load do
     set :symfony_cache_clear_flags, ''
     set :symfony_cache_warmup_flags, ''
     set :symfony_env,'prod'
+    set :symfony_parameters_upload, :ask
+    set :symfony_parameters_path, 'app/config/'
+    set :symfony_parameters_name_scheme, 'parameters_#{fetch(:stage)}.yml'
   end
 end

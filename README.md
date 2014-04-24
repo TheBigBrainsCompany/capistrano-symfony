@@ -42,7 +42,8 @@ set :symfony_cache_clear_flags, ''
 set :symfony_cache_warmup_flags, ''
 set :symfony_env, 'prod'
 set :symfony_parameters_upload, :ask
-set :symfony_parameters_name_scheme, "parameters.#{fetch(:stage)}.yml"
+set :symfony_parameters_path, 'app/config/'
+set :symfony_parameters_name_scheme, 'parameters_#{fetch(:stage)}.yml'
 ```
 
 ### Available tasks
@@ -80,6 +81,17 @@ task :my_custom_composer_task do
   invoke 'symfony:run', :'assets:install'
 end
 ```
+
+### Handling `parameters.yml`
+
+The parameter `:symfony_parameters_upload` can take tree values : 
+- **:never** : Never update the local parameter file even if the remote one is different (default)
+- **:always** : Always update the local parameter file when the remote one is different
+- **:ask** : Ask you to update the local parameter file is the remote one is different
+
+The local parameter file have to be defined in the `app/config/`, e.g: app/config/parameters_staging.yml
+
+The parameter name depends of the defined capistrano stages : `parameters_#{fetch(:stage)}.yml`
 
 ## Contributing
 
