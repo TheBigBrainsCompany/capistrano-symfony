@@ -44,6 +44,10 @@ namespace :symfony do
       task :upload do
           on roles fetch(:symfony_roles) do
               within release_path do
+                  if fetch(:symfony_parameters_name_scheme).nil?
+                      set :symfony_parameters_name_scheme, "parameters_#{fetch(:stage)}.yml"
+                  end
+
                   parameters_file_path = File.expand_path(
                       File.join(fetch(:symfony_parameters_path),
                                 fetch(:symfony_parameters_name_scheme))
@@ -121,6 +125,5 @@ namespace :load do
     set :symfony_env,'prod'
     set :symfony_parameters_upload, :ask
     set :symfony_parameters_path, 'app/config/'
-    set :symfony_parameters_name_scheme, 'parameters_#{fetch(:stage)}.yml'
   end
 end
