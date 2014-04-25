@@ -74,7 +74,7 @@ namespace :symfony do
                       end
 
                       if upload
-                          if :linked_files.include?('app/config/parameters.yml') 
+                          if fetch(:linked_files).include?('app/config/parameters.yml') 
                               destination_file = shared_path.join('app/config/parameters.yml')
                           else
                               destination_file = release_path.join('app/config/parameters.yml')
