@@ -74,7 +74,11 @@ namespace :symfony do
                       end
 
                       if upload
-                          destination_file = release_path.join('app/config/parameters.yml')
+                          if :linked_files.include?('app/config/parameters.yml') 
+                              destination_file = shared_path.join('app/config/parameters.yml')
+                          else
+                              destination_file = release_path.join('app/config/parameters.yml')
+                          end
                           upload! parameters_file_path, destination_file
                       end
                   else
