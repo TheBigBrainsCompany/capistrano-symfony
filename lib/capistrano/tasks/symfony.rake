@@ -48,17 +48,29 @@ namespace :symfony do
                       set :symfony_parameters_name_scheme, "parameters_#{fetch(:stage)}.yml"
                   end
 
+                  if not fetch(:linked_files).include?('app/config/parameters.yml')
+                      raise ArgumentError.new(true), "The 'app/config/parameters.yml' file has to be defined as a :linked_files"
+                  end
+
                   parameters_file_path = File.expand_path(
                       File.join(fetch(:symfony_parameters_path),
                                 fetch(:symfony_parameters_name_scheme))
                   )
 
+                  destination_file = shared_path.join('app/config/parameters.yml')
 
                   if File.file?(parameters_file_path)
                       upload = false
-                      parameters_hash_local  = Digest::MD5.file(parameters_file_path).hexdigest
-                      parameters_hash_remote = capture(:md5sum, release_path.join('app/config/parameters.yml')).split(' ')[0]
-                      if parameters_hash_local.to_s == parameters_hash_remote.to_s
+                      sync = false
+
+                      if test "[ -f #{destination_file} ]"
+                          parameters_hash_local  = Digest::MD5.file(parameters_file_path).hexdigest
+                          parameters_hash_remote = capture(:md5sum, destination_file).split(' ')[0]
+
+                          sync = parameters_hash_local.to_s == parameters_hash_remote.to_s
+                      end
+
+                      if sync
                           info 'Parameters are up-to-date'
                       else
                           info 'Parameters are not sync'
@@ -74,11 +86,6 @@ namespace :symfony do
                       end
 
                       if upload
-                          if fetch(:linked_files).include?('app/config/parameters.yml') 
-                              destination_file = shared_path.join('app/config/parameters.yml')
-                          else
-                              destination_file = release_path.join('app/config/parameters.yml')
-                          end
                           upload! parameters_file_path, destination_file
                       end
                   else
