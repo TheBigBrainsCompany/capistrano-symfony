@@ -48,7 +48,7 @@ namespace :symfony do
                       set :symfony_parameters_name_scheme, "parameters_#{fetch(:stage)}.yml"
                   end
 
-                  if not fetch(:linked_files).include?('app/config/parameters.yml')
+                  if fetch(:linked_files).any? or not fetch(:linked_files).include?('app/config/parameters.yml')
                       raise ArgumentError.new(true), "The 'app/config/parameters.yml' file has to be defined as a :linked_files"
                   end
 
