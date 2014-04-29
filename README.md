@@ -12,7 +12,7 @@ More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/201
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-symfony', '~> 0.1.3'
+gem 'capistrano-symfony', '~> 0.3'
 ```
 
 And then execute:
@@ -84,14 +84,24 @@ end
 
 ### Handling `parameters.yml`
 
+The `capistrano-symfony` module can upload the `app/config/parameters.yml` for you when necessary.
+
 The parameter `:symfony_parameters_upload` can take tree values : 
-- **:never** : Never update the local parameter file even if the remote one is different (default)
-- **:always** : Always update the local parameter file when the remote one is different
-- **:ask** : Ask you to update the local parameter file is the remote one is different
+- **:never** : Never upload the local parameters file even if the remote one is different
+- **:always** : Always upload the local parameters file when the remote one is different
+- **:ask** : Ask you to upload the local parameters file is the remote one is different (**default**)
 
-The local parameter file have to be defined in the `app/config/`, e.g: app/config/parameters_staging.yml
+The local parameter file have to be defined in the `app/config/`, see default value of `:symfony_parameters_path`.
 
-The parameter name depends of the defined capistrano stages : `parameters_#{fetch(:stage)}.yml`
+The parameter name depends of the defined capistrano stages, see default value of `:symfony_parameters_name_scheme` : `parameters_#{fetch(:stage)}.yml`
+
+Using this strategy, you can have different parameter files for each of your capistrano stages, e.g:
+- app/config/parameters_staging.yml
+- app/config/parameters_production.yml
+
+The only **required configuration** is the `:linked_files`, e.g: `set :linked_files, %w{app/config/parameters.yml}`.
+
+On first deployment, the parameters file will be uploaded in the shared folder. On next deployment, it will depends on your `:symfony_parameters_upload` strategy.
 
 ## Contributing
 
