@@ -39,6 +39,62 @@ namespace :symfony do
       end
     end
   end
+  namespace :parameters do
+      desc 'Upload parameters.yml'
+      task :upload do
+          on roles fetch(:symfony_roles) do
+              within release_path do
+                  if fetch(:symfony_parameters_name_scheme).nil?
+                      set :symfony_parameters_name_scheme, "parameters_#{fetch(:stage)}.yml"
+                  end
+
+                  if fetch(:linked_files).nil? or not fetch(:linked_files).include?('app/config/parameters.yml')
+                      raise ArgumentError.new(true), "The 'app/config/parameters.yml' file has to be defined as a :linked_files"
+                  end
+
+                  parameters_file_path = File.expand_path(
+                      File.join(fetch(:symfony_parameters_path),
+                                fetch(:symfony_parameters_name_scheme))
+                  )
+
+                  destination_file = shared_path.join('app/config/parameters.yml')
+
+                  if File.file?(parameters_file_path)
+                      upload = false
+                      sync = false
+
+                      if test "[ -f #{destination_file} ]"
+                          parameters_hash_local  = Digest::MD5.file(parameters_file_path).hexdigest
+                          parameters_hash_remote = capture(:md5sum, destination_file).split(' ')[0]
+
+                          sync = parameters_hash_local.to_s == parameters_hash_remote.to_s
+                      end
+
+                      if sync
+                          info 'Parameters are up-to-date'
+                      else
+                          info 'Parameters are not sync'
+                          case fetch(:symfony_parameters_upload)
+                              when :always
+                                  upload = true
+                              when :ask
+                                  $stdout.write "Parameters seems to have changed, would you like to upload #{parameters_file_path} to the remote server? [y/N] "
+                                  upload = 'y' == $stdin.gets.chomp.downcase ? true : false
+                              else
+                                  upload = false
+                          end
+                      end
+
+                      if upload
+                          upload! parameters_file_path, destination_file
+                      end
+                  else
+                      info 'No parameters found, ignoring...'
+                  end
+              end
+          end
+      end
+  end
   namespace :cache do
     desc 'Clears the cache'
     task :clear do
@@ -62,6 +118,7 @@ namespace :symfony do
     end
   end
 
+  after 'deploy:updated', 'symfony:parameters:upload'
   before 'deploy:publishing', 'symfony:cache:warmup'
   before 'deploy:publishing', 'symfony:app:clean_environment'
   # this hook work using invoke
@@ -77,5 +134,7 @@ namespace :load do
     set :symfony_cache_clear_flags, ''
     set :symfony_cache_warmup_flags, ''
     set :symfony_env,'prod'
+    set :symfony_parameters_upload, :ask
+    set :symfony_parameters_path, 'app/config/'
   end
 end

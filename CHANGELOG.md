@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0
+- Handling parameters.yml
+
 ## 0.2.2
 - Remove app_*.php instead of app*.php (#9)
 

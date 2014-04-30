@@ -4,9 +4,9 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'capistrano-symfony'
-  spec.version       = '0.2.2'
-  spec.authors       = ['Thomas Tourlourat']
-  spec.email         = ['thomas@tourlourat.com']
+  spec.version       = '0.3.0'
+  spec.authors       = ['Thomas Tourlourat', 'Boris Guéry']
+  spec.email         = ['thomas@tourlourat.com', 'guery.b@gmail.com']
   spec.description   = %q{Symfony support for Capistrano 3.x}
   spec.summary       = %q{Welcome to easy Symfony deployment}
   spec.homepage      = 'https://github.com/TheBigBrainsCompany/capistrano-symfony'
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'capistrano', '~> 3.1'
-  spec.add_runtime_dependency 'capistrano-composer', '~> 0.0.3'
+  spec.add_runtime_dependency 'capistrano-composer', '~> 0.0.4'
 
   spec.add_development_dependency 'rake', '~> 10.0'
 end
