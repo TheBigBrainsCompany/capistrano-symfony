@@ -6,6 +6,15 @@ This gem will let you run Symfony tasks with Capistrano 3.x.
 
 More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/2013-12-31-realiser-deploiement-automatique-application-symfony-avec-capistrano)
 
+## Documentation
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [Available tasks](#available-tasks)
+* [Executing symfony console commands on the server directly from the local CLI](#executing-symfony-console-commands-on-the-server-directly-from-the-local-CLI)
+* [Handling parameters.yml](#handling-parameters-yml)
+* [Contributing](#contributing)
+
 
 ## Installation
 
@@ -82,7 +91,7 @@ task :my_custom_composer_task do
 end
 ```
 
-### Handling `parameters.yml`
+### Handling parameters.yml
 
 If necessary, the `capistrano-symfony` module can upload the `app/config/parameters.yml` for you.
 
