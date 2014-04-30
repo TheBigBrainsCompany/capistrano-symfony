@@ -11,8 +11,8 @@ More informations about [Symfony & Capistrano (fr)](http://wozbe.com/fr/blog/201
 * [Installation](#installation)
 * [Usage](#usage)
 * [Available tasks](#available-tasks)
-* [Executing symfony console commands on the server directly from the local CLI](#executing-symfony-console-commands-on-the-server-directly-from-the-local-CLI)
-* [Handling parameters.yml](#handling-parameters-yml)
+* [Executing symfony console commands on the server directly from the local CLI](#executing-symfony-console-commands-on-the-server-directly-from-the-local-cli)
+* [Handling parameters.yml](#handling-parametersyml)
 * [Contributing](#contributing)
 
 
