@@ -89,7 +89,7 @@ namespace :symfony do
                           upload! parameters_file_path, destination_file
                       end
                   else
-                      info 'No parameters found, ignoring...'
+                      info "No parameters found #{parameters_file_path}, ignoring..."
                   end
               end
           end
