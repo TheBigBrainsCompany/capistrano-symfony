@@ -124,3 +124,5 @@ set :linked_files, %w{app/config/parameters.yml}
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+
+[![The Big Brains Company - Logo](http://tbbc-valid.thebigbrainscompany.com/assets/images/logo-tbbc.png)](http://thebigbrainscompany.com)
