@@ -43,7 +43,7 @@ namespace :symfony do
       desc 'Upload parameters.yml'
       task :upload do
           on roles fetch(:symfony_roles) do
-              within release_path do
+              within shared_path do
                   if fetch(:symfony_parameters_name_scheme).nil?
                       set :symfony_parameters_name_scheme, "parameters_#{fetch(:stage)}.yml"
                   end
@@ -57,7 +57,8 @@ namespace :symfony do
                                 fetch(:symfony_parameters_name_scheme))
                   )
 
-                  destination_file = shared_path.join('app/config/parameters.yml')
+                  config_path = shared_path.join('app/config')
+                  destination_file = config_path.join('parameters.yml')
 
                   if File.file?(parameters_file_path)
                       upload = false
@@ -86,6 +87,10 @@ namespace :symfony do
                       end
 
                       if upload
+                          if test "[ ! -d #{config_path} ]"
+                              execute :mkdir, '-pv', config_path
+                          end
+
                           upload! parameters_file_path, destination_file
                       end
                   else
