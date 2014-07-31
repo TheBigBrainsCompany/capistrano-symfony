@@ -43,7 +43,7 @@ namespace :symfony do
       desc 'Upload parameters.yml'
       task :upload do
           on roles fetch(:symfony_roles) do
-              within release_path do
+              within shared_path do
                   if fetch(:symfony_parameters_name_scheme).nil?
                       set :symfony_parameters_name_scheme, "parameters_#{fetch(:stage)}.yml"
                   end
