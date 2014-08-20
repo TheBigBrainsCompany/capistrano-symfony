@@ -6,6 +6,8 @@ This gem will let you run Symfony tasks with Capistrano 3.x.
 
 More informations about [Symfony & Capistrano (fr)](http://thebigbrainscompany.com/blog/posts/dployer-une-application-symfony-avec-capistrano)
 
+**Important** : The **capistrano-symfony** GEM name has been moved to the official [capistrano/symfony](https://github.com/capistrano/symfony) module. Take a look on the [installation part](#installation) to use this module with **Gemfile**.
+
 ## Documentation
 
 * [Installation](#installation)
@@ -21,7 +23,7 @@ More informations about [Symfony & Capistrano (fr)](http://thebigbrainscompany.c
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-symfony', '~> 0.3'
+gem 'capistrano-symfony', '~> 0.3', :github => 'TheBigBrainsCompany/capistrano-symfony'
 ```
 
 And then execute:
