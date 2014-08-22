@@ -1,7 +1,5 @@
 # Capistrano::Symfony
 
-[![Gem Version](https://badge.fury.io/rb/capistrano-symfony.png)](http://badge.fury.io/rb/capistrano-symfony)
-
 This gem will let you run Symfony tasks with Capistrano 3.x.
 
 More informations about [Symfony & Capistrano (fr)](http://thebigbrainscompany.com/blog/posts/dployer-une-application-symfony-avec-capistrano)
